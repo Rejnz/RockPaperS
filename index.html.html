@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Paper Scissors</title>
+	<style media="screen" rel="stylesheet" type="text/css">
+		div {
+			height: 60px;
+			width: 120px;
+			background-color: black;
+			color: white;
+			text-align: center;
+			border-radius: 10%;
+			line-height: 60px;
+			margin: 20px auto;
+			font-size: 30px;
+		}
+		p {
+			text-align: center;
+			font-size: 30px;
+		}
+		body {
+			background-color: #95B9C7;
+		}
+		.green {
+			background-color: green;
+		}
+		.red {
+			background-color: red;
+		}
+		.blue {
+			background-color: blue;
+		}
+	</style>
+</head>
+<body>
+	<div id='rock'><strong>Rock</strong>
+	</div>
+	<div id='paper'><strong>Paper</strong>
+	</div>
+	<div id='scissors'><strong>Scissors</strong>
+	</div>
+	<strong><p></p></strong>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+		var compy = function(){
+			var choice = Math.random();
+			if(choice < 0.34){
+				choice = 'rock';
+			}else if(choice > 0.66){
+				choice = 'paper';
+			}else{
+				choice = 'scissors';
+			}
+			return choice;
+		};
+		var compare = function(me, pc){
+			if(me === pc){
+				return 'You Tied';
+			}else{
+				if(me === 'rock'){
+					if(pc === 'paper'){
+						return 'You Lose';
+					}else{
+						return 'You Win!';
+					};
+				}else if(me === 'paper'){
+					if(pc === 'rock'){
+						return 'You Win!';
+					}else{
+						return 'You Lose';
+					};
+				}else{
+					if(pc === 'rock'){
+						return 'You Lose';
+					}else{
+						return 'You Win!';
+					};
+				};
+			};
+		}
+		$(document).ready(function(){
+			$('div').click(function(){
+				$('div').removeClass('green');
+				$('div').removeClass('red');
+				$('div').removeClass('blue');
+				var myChoice = '';
+				if($(this).is('#rock')){
+					myChoice = 'rock';
+				}else if($(this).is('#paper')){
+					myChoice = 'paper';
+				}else{
+					myChoice = 'scissors';
+				};
+				var pcChoice = compy();
+				if(myChoice === pcChoice){
+					$(this).addClass('blue');
+				}else{
+					$(this).addClass('green');
+					if(pcChoice === 'rock'){
+						$('#rock').addClass('red');
+					}else if(pcChoice === 'paper'){
+						$('#paper').addClass('red');
+					}else{
+						$('#scissors').addClass('red');
+					};
+				};
+				$('p').text(compare(myChoice, pcChoice));
+			});
+		});
+	</script>
+</body>
+</html>
