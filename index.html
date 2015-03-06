@@ -2,47 +2,39 @@
 <html>
 <head>
 	<title>Rock Paper Scissors</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
 	<style media="screen" rel="stylesheet" type="text/css">
 		div {
-			height: 60px;
-			width: 120px;
-			background-color: black;
+			height: 150px;
+			width: 220px;
+			background-color: #00b0ff;
 			color: white;
 			text-align: center;
-			border-radius: 10%;
 			line-height: 60px;
-			margin: 20px auto;
+			margin: 5px auto;
 			font-size: 30px;
-			font-weight: bold;
-		}
-		p {
-			text-align: center;
-			font-size: 30px;
+			text-transform: uppercase;
+			font-family: Century Gothic, sans-serif;
 			font-weight: bold;
 		}
 		body {
-			background-color: #95B9C7;
-		}
-		.green {
-			background-color: green;
-		}
-		.red {
-			background-color: red;
-		}
-		.blue {
-			background-color: blue;
+			background-color: black;
 		}
 	</style>
 </head>
 <body>
 	<div id='rock'>Rock
+	<p></p>
 	</div>
 	<div id='paper'>Paper
+	<p></p>
 	</div>
 	<div id='scissors'>Scissors
-	</div>
 	<p></p>
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 	<script>
 		var compy = function(){
 			var choice = Math.random();
@@ -80,11 +72,38 @@
 				};
 			};
 		}
+		var clean = function(me, pc){
+			var rock = true;
+			var paper = true;
+			var sciss = true;
+			if(me === 'rock'||pc === 'rock'){
+				rock = false;
+			};
+			if(me === 'paper'||pc === 'paper'){
+				paper = false;
+			};
+			if(me === 'scissors'||pc === 'scissors'){
+				sciss = false;
+			};
+			if(rock){
+				$('#rock').animate({
+					backgroundColor: '#00b0ff'
+				});
+			};
+			if(paper){
+				$('#paper').animate({
+					backgroundColor: '#00b0ff'
+				});
+			};
+			if(sciss){
+				$('#scissors').animate({
+					backgroundColor: '#00b0ff'
+				});
+			};
+		};
 		$(document).ready(function(){
 			$('div').click(function(){
-				$('div').removeClass('green');
-				$('div').removeClass('red');
-				$('div').removeClass('blue');
+				$('p').text('');
 				var myChoice = '';
 				if($(this).is('#rock')){
 					myChoice = 'rock';
@@ -94,19 +113,41 @@
 					myChoice = 'scissors';
 				};
 				var pcChoice = compy();
+				$('p', this).text(compare(myChoice, pcChoice));
 				if(myChoice === pcChoice){
-					$(this).addClass('blue');
+					$(this).animate({
+							backgroundColor: 'blue'
+					});
+					clean(myChoice, pcChoice);
 				}else{
-					$(this).addClass('green');
-					if(pcChoice === 'rock'){
-						$('#rock').addClass('red');
-					}else if(pcChoice === 'paper'){
-						$('#paper').addClass('red');
+					if(compare(myChoice, pcChoice) === 'You Win!'){
+						$(this).animate({
+							backgroundColor: 'green'
+						});
+						clean(myChoice, pcChoice);
 					}else{
-						$('#scissors').addClass('red');
+						$(this).animate({
+							backgroundColor: 'red'
+						});
+						clean(myChoice, pcChoice);
+					};
+					if(pcChoice === 'rock'){
+						$('#rock').animate({
+							backgroundColor: 'blue'
+						});
+						clean(myChoice, pcChoice);
+					}else if(pcChoice === 'paper'){
+						$('#paper').animate({
+							backgroundColor: 'blue'
+						});
+						clean(myChoice, pcChoice);
+					}else{
+						$('#scissors').animate({
+							backgroundColor: 'blue'
+						});
+						clean(myChoice, pcChoice);
 					};
 				};
-				$('p').text(compare(myChoice, pcChoice));
 			});
 		});
 	</script>
